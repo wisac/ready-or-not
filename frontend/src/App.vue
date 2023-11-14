@@ -1,12 +1,7 @@
-<script setup>
-import { ref } from "vue";
-import LoginPage from "./views/Login.vue";
-</script>
 
 <template>
-   <LoginPage />
+   <div id="app">
+       <router-view />
+   </div>
 </template>
 
-<style scoped>
-
-</style>

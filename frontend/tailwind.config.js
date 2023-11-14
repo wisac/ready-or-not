@@ -4,12 +4,13 @@ export default {
    theme: {
       extend: {
          colors: {
-            "dark": "#1F384C",
+            dark: "#1F384C",
             "primary-dark": "#5A67BA",
             "secondary-dark": "#F99C30",
-            
+            "secondary-hover": "#ffae52",
+
          },
       },
    },
-   plugins: [],
+   plugins: ["prettier-plugin-tailwindcss"],
 };
