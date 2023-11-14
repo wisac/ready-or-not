@@ -1,76 +1,37 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { ref } from "vue";
-
-const form = ref({
-   email: "",
-   password: "",
-});
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import Welcome from "../components/Welcome.vue";
+import LoginForm from "../components/LoginForm.vue";
 
 const router = useRouter();
 const goToSignup = () => router.push("/signup");
+
+onMounted(() => {
+   //when mounted
+});
+onBeforeUnmount(() => {
+   //before mounting
+});
 </script>
 
 <template>
-   <main class="w-screen">
-      <div class="grid justify-center items-center w-full">
-         <div
-            class="z-10 flex-col flex text-center justify-center items-center"
-         >
-            <h1 class="text-3xl font-bold text-white w-80">
-               Welcome to ReadyOrNot
-            </h1>
-            <p class="text-white">
-               Your go-to for past exam questions!<br />Boost your prep, ace
-               your exams!
-            </p>
-         </div>
-         <div class="text-center">
-            <button
-               @click="goToSignup"
-               class="w-48 rounded-lg h-12 text-xl font-semibold hover:bg-secondary-hover bg-secondary-dark text-white transition-colors"
-            >
-               Sign up
-            </button>
-         </div>
-         <div class="bg-stone-500 w-100">
-            <form
-               action="/home"
-               method="post"
-               class="flex flex-col justify-center items-center w-full"
-            >
-               <div>
-                  <label for="email">Email</label>
-                  <input
-                     v-model="form.email"
-                     type="email"
-                     name="email"
-                     id="email"
-                     placeholder="name@ug.edu.gh"
-                     class="w-80 h-12 outline-stone-200 outline outline-1 focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-transparent block rounded-lg"
-                  />
-               </div>
-               <div>
-                  <label for="password">Password</label>
-                  <input
-                     v-model="form.password"
-                     type="password"
-                     name="password"
-                     id="password"
-                     placeholder="password"
-                     class="w-80 h-12 outline-stone-200 outline outline-1 focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-transparent block rounded-lg"
-                  /><br />
-               </div>
+   <div class="main w-screen flex justify-center bg-red-500">
+      <div class="grid grid-rows-2 justify-center bg-green-500 w-full">
+         <div class=" greeting bg-black">
+            <Welcome />
+            <div class="text-center">
                <button
-                  type="submit"
-                  class="w-80 rounded-lg h-12 text-xl font-semibold hover:bg-primary-hov bg-primary-dark text-white transition-colors block mx-auto"
+                  @click="goToSignup"
+                  class="w-48 rounded-lg h-12 text-xl font-semibold hover:bg-secondary-hover bg-secondary-dark text-white transition-colors"
                >
-                  Login
+                  Sign up
                </button>
-            </form>
+            </div>
          </div>
+         <LoginForm class="" />
       </div>
-      <div class="absolute">
+      <!-- <div class="absolute">
          <div class="star w-48 h-48 bottom-10"></div>
          <div class="star w-48 h-48 translate-x-96 translate-y-48"></div>
          <div class="star w-48 h-48 bottom-5 right-10"></div>
@@ -79,8 +40,8 @@ const goToSignup = () => router.push("/signup");
          <div class="star w-28 h-28"></div>
          <div class="star w-56 h-56 right-10"></div>
          <div class="star w-36 h-36 right-1/3 bottom-1/2"></div>
-      </div>
-   </main>
+      </div> -->
+   </div>
 </template>
 
 <style scoped>
