@@ -16,20 +16,22 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-   <div class="main w-screen flex justify-center bg-red-500">
-      <div class=" flex items-center flex-col justify-center p-3 bg-green-500 w-full">
-         <div class="greeting max-w-md bg-black">
+   <div class="main w-screen h-screen flex justify-center items-center bg-red-500t">
+      <div
+         class="items-center lg:flex-row-reverse flex flex-col justify-center p-3 bg-green-500t w-full h-full"
+      >
+         <div class="greeting max-w-md bg-black-t">
             <Welcome />
-            <div class="text-center">
+            <div class="text-center my-6">
                <button
                   @click="goToSignup"
-                  class="w-48 rounded-lg h-12 text-xl font-semibold hover:bg-secondary-hover bg-accent text-white transition-colors"
+                  class="w-48 rounded-lg h-12 text-xl font-semibold hover:bg-accent-hover bg-accent text-white transition-colors"
                >
                   Sign up
                </button>
             </div>
          </div>
-         <LoginForm class="max-w-lg" />
+         <LoginForm class="max-w-lg shadow-2xl shadow-slate-800" />
       </div>
       <!-- <div class="absolute">
          <div class="star w-48 h-48 bottom-10"></div>
@@ -45,25 +47,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-
-
-main {
-   background-color: var(--dark);
-   height: 100vh;
-}
-
-label {
-   color: white;
-}
-
-/* input {
-   border-radius: 8px;
-   border: 1px solid white;
-   padding: 5px;
-   margin: 5px;
-
-} */
-
 .star {
    clip-path: polygon(
       50% 0%,

@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const form = ref({
    email: "",
@@ -9,13 +10,14 @@ const form = ref({
 
 <template>
    <div
-      class="login-container flex flex-col p-8 rounded-2xl w-full mt-5 justify-center items-center bg-primary-dark"
+      class="login-container flex flex-col p-8 rounded-2xl w-full justify-center items-center bg-neutral-lighter"
    >
-      <img class="w-72" src="../assets/logo.png" alt="" />
+   <img class="w-56 " src="../assets/logo.png" alt="logo" />
+   <h2 class="text-2xl font-bold my-6" >Login to your account</h2>
 
       <form action="/home" method="post">
          <div class="form-group">
-            <label for="email">Email</label>
+            <label class="font-medium" for="email">Email</label>
             <input
                v-model="form.email"
                type="email"
@@ -26,7 +28,7 @@ const form = ref({
             />
          </div>
          <div class="form-group">
-            <label for="password">Password</label>
+            <label class="font-medium" for="password">Password</label>
             <input
                v-model="form.password"
                type="password"
@@ -38,10 +40,12 @@ const form = ref({
          </div>
          <button
             type="submit"
-            class="w-full rounded-lg h-12 text-xl font-semibold hover:bg-primary-hov bg-accent text-white transition-colors block mx-auto"
+            class="w-full rounded-lg mb-6 h-12 text-xl font-semibold hover:bg-primary-hover bg-primary-dark drop-shadow-md text-white transition-colors block mx-auto"
          >
             Login
          </button>
+         <p class="text-secondary/40 w-64 mobile:w-full text-center">Don’t have an account? <router-link class="text-primary-dark" to="/signup">Sign up here</router-link></p>
+         
       </form>
    </div>
 </template>
@@ -49,7 +53,7 @@ const form = ref({
 <style>
 .form-group {
    width: 100%;
-   background-color: blueviolet;
+   /* background-color: blueviolet; */
    margin-bottom: 1.5rem;
 }
 
@@ -57,7 +61,7 @@ input[type="email"],
 [type="password"] {
    border-radius: 8px;
    padding: 5px;
-   outline: solid 1px var(--primary);
+   outline: solid 1px var(--primary-light);
    outline-offset: 1px;
    display: block;
    width: 100%;
@@ -66,7 +70,7 @@ input[type="email"],
 
 form {
    /* background-color: var(--white-1); */
-   background-color: red;
+   /* background-color: red; */
    display: flex;
    justify-content: center;
    align-items: center;
