@@ -1,21 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 /* @import './base.css'; */
 
-:root{
-   --dark-black: #1F384C;
-   --dd: #6370c5;
-   --white-1: #F5F5F5;
-   --grey-text-1: #B3B3B3;
-   --grey-outline: #EBEBEB;
-     
+:root {
+   --secondary: #1f384c;
+   --secondary-light: #4c6088;
+   --secondary-lighter: rgba(31, 56, 77, 0.151);
+
+   --primary-dark: #646dac;
+   --primary: #c7ceff;
+   --primary-light: #dfe2fa;
+   --primary-lighter: rgba(110, 125, 222, 0.123);
+   --primary-lightest: #f1f2f7;
+   --primary-hov: #6370c5;
+
+   --accent: #f99c30;
+   --accent-light: #ffe6cc;
+   --accent-hov: #ffae52;
+
+   --neutral: #b3b3b3;
+   --neutral-light: #ebebeb;
+   --neutral-lighter: #f5f5f5;
+
+   --tertiary: hsla(200, 71%, 11%, 0.478);
+   --tertiary-light: rgb(176, 195, 204);
+   --tertiary-lighter: rgba(31, 56, 77, 0.151);
 }
 
 body {
-    font-family: "DM sans", sans-serif;
+   font-family: "DM sans", sans-serif;
 }
-

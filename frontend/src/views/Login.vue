@@ -17,19 +17,19 @@ onBeforeUnmount(() => {
 
 <template>
    <div class="main w-screen flex justify-center bg-red-500">
-      <div class="grid grid-rows-2 justify-center bg-green-500 w-full">
-         <div class=" greeting bg-black">
+      <div class=" flex items-center flex-col justify-center p-3 bg-green-500 w-full">
+         <div class="greeting max-w-md bg-black">
             <Welcome />
             <div class="text-center">
                <button
                   @click="goToSignup"
-                  class="w-48 rounded-lg h-12 text-xl font-semibold hover:bg-secondary-hover bg-secondary-dark text-white transition-colors"
+                  class="w-48 rounded-lg h-12 text-xl font-semibold hover:bg-secondary-hover bg-accent text-white transition-colors"
                >
                   Sign up
                </button>
             </div>
          </div>
-         <LoginForm class="" />
+         <LoginForm class="max-w-lg" />
       </div>
       <!-- <div class="absolute">
          <div class="star w-48 h-48 bottom-10"></div>
@@ -45,8 +45,10 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+
+
 main {
-   background-color: var(--dark-black);
+   background-color: var(--dark);
    height: 100vh;
 }
 
