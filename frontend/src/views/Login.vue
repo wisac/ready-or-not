@@ -18,16 +18,16 @@ onBeforeUnmount(() => {
 <template>
    <div class="main w-screen h-screen flex justify-center items-center bg-red-500t">
       <div
-         class="items-center lg:flex-row-reverse flex flex-col justify-center p-3 bg-green-500t w-full h-full"
+         class="items-center lg:flex-row-reverse lg:gap-24  flex flex-col justify-center p-3 bg-green-500t w-full h-full"
       >
          <div class="greeting max-w-md bg-black-t">
-            <Welcome />
+            <Welcome  />
             <div class="text-center my-6">
                <button
                   @click="goToSignup"
                   class="w-48 rounded-lg h-12 text-xl font-semibold hover:bg-accent-hover bg-accent text-white transition-colors"
                >
-                  Sign up
+                  Get Started
                </button>
             </div>
          </div>
