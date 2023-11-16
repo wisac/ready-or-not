@@ -16,22 +16,24 @@ const form = ref({
    <h2 class="text-2xl font-bold my-6" >Login to your account</h2>
 
       <form action="/home" method="post">
-         <div class="form-group">
+         <div class="input-group">
             <label class="font-medium" for="email">Email</label>
             <input
                v-model="form.email"
                type="email"
                name="email"
+               required
                id="email"
                placeholder="name@ug.edu.gh"
                class="focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
          </div>
-         <div class="form-group">
+         <div class="input-group">
             <label class="font-medium" for="password">Password</label>
             <input
                v-model="form.password"
                type="password"
+               required
                name="password"
                id="password"
                placeholder="password"
@@ -51,9 +53,8 @@ const form = ref({
 </template>
 
 <style>
-.form-group {
+.input-group {
    width: 100%;
-   /* background-color: blueviolet; */
    margin-bottom: 1.5rem;
 }
 
@@ -69,8 +70,6 @@ input[type="email"],
 }
 
 form {
-   /* background-color: var(--white-1); */
-   /* background-color: red; */
    display: flex;
    justify-content: center;
    align-items: center;

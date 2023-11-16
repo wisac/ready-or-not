@@ -38,7 +38,7 @@ export default {
             laptop: "1024px",
             // => @media (min-width: 1024px) { ... }
 
-            desktop: "1280px",
+            tv: "1920px",
             // => @media (min-width: 1280px) { ... }
          },
       },

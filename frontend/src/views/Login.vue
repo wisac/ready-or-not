@@ -18,7 +18,7 @@ onBeforeUnmount(() => {
 <template>
    <div class="main w-screen h-screen flex justify-center items-center bg-red-500t">
       <div
-         class="items-center lg:flex-row-reverse lg:gap-24  flex flex-col justify-center p-3 bg-green-500t w-full h-full"
+         class="items-center lg:flex-row-reverse  flex flex-col justify-center lg:gap-20 xl:gap-40 2xl:gap-60  tv:gap-100 p-3 bg-green-500t w-full h-full"
       >
          <div class="greeting max-w-md bg-black-t">
             <Welcome  />
