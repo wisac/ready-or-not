@@ -49,7 +49,7 @@ const router = useRouter();
          </div>
          <button
             type="submit"
-            class="w-full rounded-lg mb-6 h-12 text-xl font-semibold hover:bg-primary-hover bg-primary-dark drop-shadow-md text-white transition-colors block mx-auto"
+            class="w-full rounded-lg mb-6 h-12 text-xl font-semibold hover:bg-primary-hover bg-primary-dark drop-shadow-md text-white transition-colors block mx-auto" 
          >
             Login
          </button>

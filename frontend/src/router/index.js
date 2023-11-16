@@ -8,6 +8,7 @@ const routes = [
       name: "Login",
       component: Login,
    },
+
    {
       path: "/signup",
       name: "Signup",
@@ -30,7 +31,7 @@ router.beforeEach((to, from, next) => {
       document.body.style.backgroundRepeat = "no-repeat";
       document.body.style.backgroundPosition = "center";
    } else {
-      document.body.style.backgroundColor = ""; //white
+      document.body.style.backgroundColor = "#ff0000"; //white
    }
    next();
 });
