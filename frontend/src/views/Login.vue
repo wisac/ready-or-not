@@ -7,6 +7,8 @@ import LoginForm from "../components/LoginForm.vue";
 const router = useRouter();
 const goToSignup = () => router.push("/signup");
 
+
+
 onMounted(() => {
    //when mounted
 });
@@ -35,37 +37,7 @@ onBeforeUnmount(() => {
          </div>
          <LoginForm class="max-w-lg shadow-2xl shadow-slate-800" />
       </div>
-      <div class="star w-32 h-32 top-24 right-[1rem]"></div>
-      <div class="star w-20 h-20 top-48 right-80 lg:top-96 lg:right-104"></div>
-      <div class="star w-28 h-28 top-5 right-60"></div>
-      
-      <div class="star w-28 h-28 -left-0"></div>
-      <div class="star w-48 h-48 bottom-10 left-10 md:top-20 lg:top-96 md:left-20 lg:left-96"></div>
-      <div class="star w-40 h-40 bottom-20 lg:top-10 lg:left-48"></div>
-      
-      <div class="star w-48 h-48 lg:w-28 lg:h-28 md:w-28 md:h-28 md:bottom-72 bottom-44 right-10"></div>
-
-      <div class="star w-20 h-20 bottom-2 lg:left-48" ></div>
-      <div class="star w-40 h-40 bottom-10 right-12 lg:right-48 lg:bottom-9 "></div>
-
-
-      <!-- <div class="star w-28 h-28"></div> -->
-      <!-- <div class="star w-56 h-56 right-10"></div> -->
-      <!-- <div class="star w-32 h-32 bottom-72 right-2"></div> -->
-      <!-- <div class="star w-52 h-52 lg:-translate-x-[2rem] translate-y-100"></div> -->
-
    </div>
-   <!-- <div class="relative -z-10">
-      <div class="star w-48 h-48 bottom-10"></div>
-      <div class="star w-48 h-48 translate-x-96 translate-y-48"></div>
-      <div class="star w-48 h-48 bottom-5 right-10"></div>
-      <div class="star w-24 h-24 bottom-96 -right-48 lg:-right-96"></div>
-      <div class="star w-48 h-48 left-40"></div>
-      <div class="star w-28 h-28"></div>
-      <div class="star w-56 h-56 right-10"></div>
-      <div class="star w-32 h-32 bottom-72 right-2"></div>
-      <div class="star w-52 h-52 lg:-translate-x-[2rem] translate-y-100"></div>
-   </div> -->
 </template>
 
 <style scoped>
