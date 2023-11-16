@@ -24,9 +24,12 @@ const router = createRouter({
 //set background color for login and signup pages
 router.beforeEach((to, from, next) => {
    if (to.name === "Login" || to.name === "Signup") {
-      document.body.style.backgroundColor = "#1F384C"; //dark-bg
-   }
-   else {
+      document.body.style.backgroundImage =
+         "url(https://asetena.com/file_transferred/2021/02/university-of-ghana.jpg)";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.body.style.backgroundPosition = "center";
+   } else {
       document.body.style.backgroundColor = ""; //white
    }
    next();

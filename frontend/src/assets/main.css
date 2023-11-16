@@ -6,7 +6,8 @@
 /* @import './base.css'; */
 
 :root {
-   --secondary: #1f384c;
+   --secondary: #152c3f;
+   --secondary-dark: #182e41;
    --secondary-light: #4c6088;
    --secondary-lighter: rgba(31, 56, 77, 0.151);
 
