@@ -16,6 +16,7 @@
       "no-console": "off",
       "semi": "off",
       "import/no-extraneous-dependencies": "off",
-      "import/extensions": "off"
+      "import/extensions": "off",
+      "comma-dangle": "off"
    }
 }

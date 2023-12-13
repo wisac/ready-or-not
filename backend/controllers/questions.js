@@ -15,7 +15,7 @@ const getQuestion = (req, res, next) => {
       formattedResponse.success.data = ["3433424"];
       res.status(200).json(formattedResponse.success);
    } catch (error) {
-      formattedResponse.failure.message = "invalid";
+      formattedResponse.failure.message = error;
       res.status(404).json(formattedResponse.failure);
    }
 };
