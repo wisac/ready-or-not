@@ -9,5 +9,13 @@
         "sourceType": "module"
     },
     "rules": {
+      "quotes": ["warn", "double"],
+      "no-unused-vars": "warn",
+      "no-underscore-dangle": "off",
+      "indent": ["warn", 3],
+      "no-console": "off",
+      "semi": "warn",
+      "import/no-extraneous-dependencies": "off",
+      "import/extensions": "off"
     }
 }
