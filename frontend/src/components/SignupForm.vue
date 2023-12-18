@@ -3,13 +3,13 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const user = ref({
+   name: "",
    email: "",
    password: "",
    confirmPassword: "",
 });
 
-// const router = useRouter();
-// const goToLogin = () => router.push("/login");
+
 
 </script>
 
@@ -24,7 +24,7 @@ const user = ref({
          <div class="input-group">
             <label class="font-medium" for="name">Name</label>
             <input
-               v-model="user.password"
+               v-model="user.name"
                type="text"
                required
                name="name"

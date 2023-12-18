@@ -1,14 +1,26 @@
 import mongoose, { Schema } from "mongoose";
 
-const questionsSchema = new mongoose.Schema({
-   courseID: {
+const questionSchema = new mongoose.Schema({
+   course: {
       type: Schema.Types.ObjectId,
       ref: "Course",
       require: true,
    },
-   quesiton: {
+   question: {
       type: String,
       required: true,
-      options: [String],
+   },
+   options: {
+      type: [String],
+      require: [true, "A question must have options"],
+   },
+   answer: {
+      type: String,
+      require: [true, "An question must have an answer"],
+      trim: true,
    },
 });
+
+const Question = mongoose.model("Question", questionSchema);
+
+export default Question;

@@ -31,7 +31,7 @@ router.beforeEach((to, from, next) => {
       document.body.style.backgroundRepeat = "no-repeat";
       document.body.style.backgroundPosition = "center";
    } else {
-      document.body.style.backgroundColor = "#ff0000"; //white
+      document.body.style.backgroundColor = "#fff"; //white
    }
    next();
 });

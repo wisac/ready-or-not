@@ -3,26 +3,44 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const user = ref({
-    email: "",
-    password: "",
+   email: "",
+   password: "",
 });
 
 const error = ref("");
 
 const router = useRouter();
 
+const handleSubmit = async (e) => {
+   e.preventDefault();
 
+   const response = await fetch("http://localhost:3000", {
+      method: "POST",
+      headers: {
+         "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+   });
 
+   if (response.ok) {
+      const data = await response.json();
+      // Handle successful login
+      router.push("/home");
+      console.log("Success");
+   } else {
+      // Handle error
+   }
+};
 </script>
 
 <template>
    <div
       class="login-container flex flex-col p-8 rounded-2xl w-full justify-center items-center bg-neutral-lighter"
    >
-   <img class="w-56 " src="../assets/logo.png" alt="logo" />
-   <h2 class="text-2xl font-bold my-6" >Login to your account</h2>
+      <img class="w-56" src="../assets/logo.png" alt="logo" />
+      <h2 class="text-2xl font-bold my-6">Login to your account</h2>
 
-      <form action="/home" method="post">
+      <form action="" method="post">
          <div class="input-group">
             <label class="font-medium" for="email">Email</label>
             <input
@@ -49,12 +67,17 @@ const router = useRouter();
          </div>
          <button
             type="submit"
-            class="w-full rounded-lg mb-6 h-12 text-xl font-semibold hover:bg-primary-hover bg-primary-dark drop-shadow-md text-white transition-colors block mx-auto" 
+            class="w-full rounded-lg mb-6 h-12 text-xl font-semibold hover:bg-primary-hover bg-primary-dark drop-shadow-md text-white transition-colors block mx-auto"
+            @click="handleSubmit"
          >
             Login
          </button>
-         <p class="text-secondary/40 w-64 mobile:w-full text-center">Don’t have an account? <router-link class="text-primary-dark" to="/signup">Sign up here</router-link></p>
-         
+         <p class="text-secondary/40 w-64 mobile:w-full text-center">
+            Don’t have an account?
+            <router-link class="text-primary-dark" to="/signup"
+               >Sign up here</router-link
+            >
+         </p>
       </form>
    </div>
 </template>
