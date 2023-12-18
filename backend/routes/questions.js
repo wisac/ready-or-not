@@ -6,7 +6,7 @@ const router = express.Router();
 router
    .route("/questions")
    .get(controller.getAllQuestions)
-   // .post(controller.createQuestion);
+   .post(controller.createQuestion);
 
 router
    .route("/questions/:id")

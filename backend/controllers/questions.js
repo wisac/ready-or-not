@@ -20,4 +20,13 @@ const getQuestion = (req, res, next) => {
    }
 };
 
-export default { getAllQuestions, getQuestion };
+const createQuestion = (req, res, next) => {
+   try {
+      formattedResponse.success.data = [1];
+   } catch (error) {
+      formattedResponse.failure.message = error;
+      res.status(404).json(formattedResponse.failure);
+   }
+};
+
+export default { getAllQuestions, getQuestion, createQuestion };

@@ -3,6 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+# Workspace settings
+.vscode
+
 # Dependency directories
 node_modules/
 jspm_packages/

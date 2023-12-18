@@ -12,11 +12,19 @@
       "quotes": ["warn", "double"],
       "no-unused-vars": ["warn", { "argsIgnorePattern": "req|res|next|val" }],
       "no-underscore-dangle": "off",
-      "indent": ["warn", 3],
+      "indent": ["off", 3],
       "no-console": "off",
       "semi": "off",
       "import/no-extraneous-dependencies": "off",
       "import/extensions": "off",
-      "comma-dangle": "off"
+      "comma-dangle": "off",
+      "no-empty": "warn",
+      "no-trailing-spaces": "off",
+      "spaced-comment": "warn",
+      "no-multiple-empty-lines": "off",
+      "prefer-const": "warn",
+      "comma-spacing": "off",
+      "padded-blocks": "off"
+      
    }
 }

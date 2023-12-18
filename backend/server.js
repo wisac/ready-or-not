@@ -1,16 +1,50 @@
+/* eslint-disable import/first */
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import mongoose from "mongoose";
+
+// handle uncaught exceptions
+process.on("uncaughtException", (error) => {
+   console.error("ERROR:", error.name, error.message);
+   console.log("UNCAUGHT EXCEPTION: Shutting down...");
+   process.exit(1);
+});
+
 import app from "./app.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 dotenv.config({
-   path: `${__dirname}/config.env`,
+   path: `${__dirname}/.env`,
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-   console.log("Listening on port", PORT);
+// connect to db and listen for requests
+let server;
+const DB_CONN_URL = process.env.DB_CONN_URL.replace(
+   "<PASSWORD>",
+   process.env.DB_PASSWORD
+);
+
+mongoose
+   .connect(DB_CONN_URL, {
+      dbName: "readyornot",
+   })
+   .then(() => {
+      const PORT = process.env.PORT || 3000;
+      server = app.listen(PORT, () => {
+         console.log("Connected to DB");
+         console.log("Listening on port", PORT);
+      });
+   });
+
+// handle unhandled rejected promises(for async codes)
+process.on("unhandledRejection", (error) => {
+   console.error("ERROR:", error.name, error.message);
+   console.log("UNHANDLED REJECTION: Shutting down application...");
+   if (server) {
+      server.close();
+   }
+   process.exit(1);
 });
