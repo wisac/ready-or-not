@@ -1,4 +1,3 @@
-import { model } from "mongoose";
 
 class ApiFeatures {
    constructor(query, queryString) {
@@ -8,7 +7,6 @@ class ApiFeatures {
 
    filter() {
       console.log(this.queryString);
-      console.log("query:", model);
 
       // remove other feature params
       const queryObj = { ...this.queryString };
@@ -29,7 +27,7 @@ class ApiFeatures {
    }
 
    sort() {
-      let sortBy = "level";
+      let sortBy = "level -courseCode";
       console.log(this.queryString.sort);
       if (this.queryString.sort) {
          sortBy = this.queryString.sort.replace(",", " ");
@@ -44,6 +42,16 @@ class ApiFeatures {
          ? this.queryString.fields.replace(",", " ")
          : "-__v";
       this.query = this.query.select(fields);
+      return this;
+   }
+
+   paginate() {
+      const page = 1 * (this.queryString.page) || 1;
+      const limit = 1 * (this.queryString.limit) || 10;
+
+      const skip = (page - 1) * limit;
+   
+      this.query = this.query.skip(skip).limit(limit);
       return this;
    }
 }

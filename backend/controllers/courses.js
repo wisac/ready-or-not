@@ -8,9 +8,12 @@ const getAllCourses = async (req, res, next) => {
       const queryString = { ...req.query };
 
       const features = new ApiFeatures(Course.find(), queryString)
-         .filter()
-         .sort()
+      .filter()
+      .sort()
+         .limitFields()
+         .paginate();
       const courses = await features.query;
+      console.log(courses)
 
       res.status(200).json(formattedResponse("success", courses));
    } catch (error) {
