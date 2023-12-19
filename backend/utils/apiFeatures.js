@@ -7,12 +7,11 @@ class ApiFeatures {
    }
 
    filter() {
-
       console.log(this.queryString);
       console.log("query:", model);
 
       // remove other feature params
-      const queryObj = this.queryString;
+      const queryObj = { ...this.queryString };
       const excludeParams = ["sort", "limit", "page", "fields"];
       excludeParams.forEach((el) => delete queryObj[el]);
 
@@ -26,10 +25,27 @@ class ApiFeatures {
       const newQueryObj = JSON.parse(queryStr);
       this.query = this.query.find(newQueryObj);
 
-      return this
+      return this;
+   }
 
+   sort() {
+      let sortBy = "level";
+      console.log(this.queryString.sort);
+      if (this.queryString.sort) {
+         sortBy = this.queryString.sort.replace(",", " ");
+      }
+      this.query = this.query.sort(sortBy);
+      console.log(sortBy);
+      return this;
+   }
+
+   limitFields() {
+      const fields = this.queryString.fields
+         ? this.queryString.fields.replace(",", " ")
+         : "-__v";
+      this.query = this.query.select(fields);
+      return this;
    }
 }
 
-
-export default ApiFeatures
+export default ApiFeatures;

@@ -7,10 +7,11 @@ const getAllCourses = async (req, res, next) => {
    try {
       const queryString = { ...req.query };
 
-      const features = new ApiFeatures(Course.find(), queryString).filter();
+      const features = new ApiFeatures(Course.find(), queryString)
+         .filter()
+         .sort()
       const courses = await features.query;
 
-      
       res.status(200).json(formattedResponse("success", courses));
    } catch (error) {
       res.status(404).json(formattedResponse("error", error.message));
