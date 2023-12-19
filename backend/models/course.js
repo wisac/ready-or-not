@@ -42,7 +42,7 @@ const courseSchema = new mongoose.Schema(
 );
 
 courseSchema.pre("find", function (next) {
-   console.log("IN THE MIDDLEWARE");
+   console.log("IN FIND MIDDLEWARE");
    next()
 });
 

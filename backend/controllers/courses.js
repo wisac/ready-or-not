@@ -1,14 +1,19 @@
 import Course from "../models/course.js";
+import ApiFeatures from "../utils/apiFeatures.js";
 import formattedResponse from "../utils/formattedResponse.js";
 
 // get all questions
 const getAllCourses = async (req, res, next) => {
    try {
-      const courses = await Course.find();
+      const queryString = { ...req.query };
 
+      const features = new ApiFeatures(Course.find(), queryString).filter();
+      const courses = await features.query;
+
+      
       res.status(200).json(formattedResponse("success", courses));
    } catch (error) {
-      res.status(404).json(formattedResponse("error", error));
+      res.status(404).json(formattedResponse("error", error.message));
    }
 };
 
@@ -78,7 +83,6 @@ const createCourse = async (req, res, next) => {
       const newCourse = await Course.create(req.body);
 
       res.status(201).json(formattedResponse("success", newCourse));
-      
    } catch (error) {
       res.status(404).json(formattedResponse("error", error.message));
    }
