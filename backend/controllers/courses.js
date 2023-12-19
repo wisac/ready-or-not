@@ -18,7 +18,8 @@ const getCourse = async (req, res, next) => {
       console.log(courseCode);
       const course = await Course.findOne({ courseCode });
 
-      if (!course) throw Error(`No course exist with the course code: ${courseCode}`);
+      if (!course)
+         throw Error(`No course exist with the course code: ${courseCode}`);
 
       res.status(200).json(formattedResponse("success", course));
    } catch (error) {
@@ -26,8 +27,27 @@ const getCourse = async (req, res, next) => {
    }
 };
 
-const updateCourse = (req, res, next) => {
-   res.json({ courses: ["updated"] });
+const updateCourse = async (req, res, next) => {
+   try {
+      const { courseID } = req.params;
+      const courseUpdates = req.body;
+
+      console.log(req.params);
+      console.log(courseID, courseUpdates);
+      const updatedCourse = await Course.findByIdAndUpdate(
+         courseID,
+         courseUpdates,
+         {
+            new: true,
+            runValidators: true,
+         }
+      );
+      if (!updatedCourse) throw Error(`No course exist with the course ID: ${courseID}`);
+
+      res.status(200).json(formattedResponse("success", updatedCourse));
+   } catch (error) {
+      res.status(404).json(formattedResponse("fail", error.message));
+   }
 };
 
 const deleteCourse = (req, res, next) => {

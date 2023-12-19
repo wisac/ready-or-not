@@ -4,7 +4,7 @@ import controller from "../controllers/courses.js";
 const router = Router();
 
 router
-   .route("/:courseCode")
+   .route("/:courseID")
    .get(controller.getCourse)
    .patch(controller.updateCourse)
    .delete(controller.deleteCourse);
