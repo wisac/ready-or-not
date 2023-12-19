@@ -1,13 +1,16 @@
-const success = {
-   status: "success",
-   data: {
-      questions: [],
-   },
+const formattedResponse = (status, value) => {
+   if (status === "success") {
+      return {
+         status,
+       data: { value }
+      };
+   }
+   if (status === "fail" || status === "error") {
+      return {
+         status,
+         message: value,
+      };
+   }
 };
 
-const failure = {
-   status: "failed",
-   message: "failed",
-};
-
-export default { success, failure };
+export default formattedResponse;

@@ -11,7 +11,7 @@
       "challenge.html": true,
       "indexx.html": true,
       "mycode.html": true,
-      "**/.vscode": true
+      "**/.vscode": false
    },
    "explorerExclude.backup": {},
    "editor.tabSize": 3
