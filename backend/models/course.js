@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+/* eslint-disable prefer-arrow-callback */
 import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema(
@@ -14,7 +16,6 @@ const courseSchema = new mongoose.Schema(
             /^[A-Za-z]{4}[0-9]{3}$/,
             "Course code must begin with a 4 alphabets and 3 numbers",
          ],
-         
       },
       title: {
          type: String,
@@ -39,6 +40,16 @@ const courseSchema = new mongoose.Schema(
       // toObject: { virtuals: true },
    }
 );
+
+courseSchema.pre("find", function (next) {
+   console.log("IN THE MIDDLEWARE");
+   next()
+});
+
+courseSchema.pre("findOneAndUpdate", function (next) {
+   console.log("||IN UPDATE MIDDLEWARE")
+   next()
+})
 
 const Course = mongoose.model("Course", courseSchema);
 

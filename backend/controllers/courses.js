@@ -12,14 +12,16 @@ const getAllCourses = async (req, res, next) => {
    }
 };
 
+// get one course
 const getCourse = async (req, res, next) => {
    try {
-      const { courseCode } = req.params;
-      console.log(courseCode);
-      const course = await Course.findOne({ courseCode });
+      const { courseID } = req.params;
+      console.log(courseID);
+      const course = await Course.findByIdAndUpdate(courseID);
 
-      if (!course)
-         throw Error(`No course exist with the course code: ${courseCode}`);
+      if (!course) {
+         throw Error(`No course exist with the course code: ${courseID}`);
+      }
 
       res.status(200).json(formattedResponse("success", course));
    } catch (error) {
@@ -27,6 +29,7 @@ const getCourse = async (req, res, next) => {
    }
 };
 
+// update course
 const updateCourse = async (req, res, next) => {
    try {
       const { courseID } = req.params;
@@ -34,7 +37,7 @@ const updateCourse = async (req, res, next) => {
 
       console.log(req.params);
       console.log(courseID, courseUpdates);
-      const updatedCourse = await Course.findByIdAndUpdate(
+      const modifiedCourse = await Course.findByIdAndUpdate(
          courseID,
          courseUpdates,
          {
@@ -42,23 +45,40 @@ const updateCourse = async (req, res, next) => {
             runValidators: true,
          }
       );
-      if (!updatedCourse) throw Error(`No course exist with the course ID: ${courseID}`);
+      if (!modifiedCourse) {
+         throw Error(`No course exist with the course ID: ${courseID}`);
+      }
 
-      res.status(200).json(formattedResponse("success", updatedCourse));
+      res.status(200).json(formattedResponse("success", modifiedCourse));
    } catch (error) {
       res.status(404).json(formattedResponse("fail", error.message));
    }
 };
 
-const deleteCourse = (req, res, next) => {
-   res.json({ courses: ["del"] });
+// delete course
+const deleteCourse = async (req, res, next) => {
+   try {
+      const { courseID } = req.params;
+      console.log(courseID);
+      const removedCourse = await Course.findByIdAndDelete(courseID);
+
+      if (!removedCourse) {
+         throw Error(`No course exist with the course ID ${courseID}`);
+      }
+
+      res.status(204).json(formattedResponse("success", removedCourse));
+   } catch (error) {
+      res.status(404).json(formattedResponse("fail", error.message));
+   }
 };
 
+// create course
 const createCourse = async (req, res, next) => {
    try {
       const newCourse = await Course.create(req.body);
 
-      res.status(200).json(formattedResponse("success", newCourse));
+      res.status(201).json(formattedResponse("success", newCourse));
+      
    } catch (error) {
       res.status(404).json(formattedResponse("error", error.message));
    }
