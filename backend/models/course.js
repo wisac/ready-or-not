@@ -14,6 +14,7 @@ const courseSchema = new mongoose.Schema(
             /^[A-Za-z]{4}[0-9]{3}$/,
             "Course code must begin with a 4 alphabets and 3 numbers",
          ],
+         
       },
       title: {
          type: String,

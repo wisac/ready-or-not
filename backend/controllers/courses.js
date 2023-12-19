@@ -1,6 +1,7 @@
 import Course from "../models/course.js";
 import formattedResponse from "../utils/formattedResponse.js";
 
+// get all questions
 const getAllCourses = async (req, res, next) => {
    try {
       const courses = await Course.find();
@@ -11,8 +12,18 @@ const getAllCourses = async (req, res, next) => {
    }
 };
 
-const getCourse = (req, res, next) => {
-   res.json({ courses: ["one course"] });
+const getCourse = async (req, res, next) => {
+   try {
+      const { courseCode } = req.params;
+      console.log(courseCode);
+      const course = await Course.findOne({ courseCode });
+
+      if (!course) throw Error(`No course exist with the course code: ${courseCode}`);
+
+      res.status(200).json(formattedResponse("success", course));
+   } catch (error) {
+      res.status(404).json(formattedResponse("fail", error.message));
+   }
 };
 
 const updateCourse = (req, res, next) => {
