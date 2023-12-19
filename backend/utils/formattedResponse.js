@@ -2,7 +2,7 @@ const formattedResponse = (status, value) => {
    if (status === "success") {
       return {
          status,
-       data: { value }
+         data: value ,
       };
    }
    if (status === "fail" || status === "error") {
@@ -11,6 +11,7 @@ const formattedResponse = (status, value) => {
          message: value,
       };
    }
+   return {}
 };
 
 export default formattedResponse;

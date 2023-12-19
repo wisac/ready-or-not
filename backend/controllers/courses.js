@@ -1,5 +1,14 @@
-const getAllCourses = (req, res, next) => {
-   res.json({ courses: ["allCourses"] });
+import Course from "../models/course.js";
+import formattedResponse from "../utils/formattedResponse.js";
+
+const getAllCourses = async (req, res, next) => {
+   try {
+      const courses = await Course.find();
+
+      res.status(200).json(formattedResponse("success", courses));
+   } catch (error) {
+      res.status(404).json(formattedResponse("error", error));
+   }
 };
 
 const getCourse = (req, res, next) => {
@@ -14,8 +23,14 @@ const deleteCourse = (req, res, next) => {
    res.json({ courses: ["del"] });
 };
 
-const createCourse = (req, res, next) => {
-   res.json({ courses: ["created"] });
+const createCourse = async (req, res, next) => {
+   try {
+      const newCourse = await Course.create(req.body);
+
+      res.status(200).json(formattedResponse("success", newCourse));
+   } catch (error) {
+      res.status(404).json(formattedResponse("error", error.message));
+   }
 };
 
 export default {

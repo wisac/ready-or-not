@@ -6,12 +6,12 @@ const router = express.Router();
 router
    .route("/")
    .get(controller.getAllQuestions)
-   // .post(controller.createQuestion)
+   .post(controller.createQuestion)
 
-// router
-//    .route("/:questionID")
-//    .get(controller.getQuestion)
-//    // .patch(controller.updateQuestion)
+router
+   .route("/:questionID")
+   .get(controller.getQuestion)
+   // .patch(controller.updateQuestion)
    // .delete(controller.deleteQuestion);
 
 
