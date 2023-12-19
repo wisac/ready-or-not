@@ -23,21 +23,17 @@ dotenv.config({
 // connect to db and listen for requests
 let server;
 const DB_CONN_URL = process.env.DB_CONN_URL.replace(
-   "<PASSWORD>",
+   "<password>",
    process.env.DB_PASSWORD
-);
+).replace("<username>", process.env.DB_USERNAME);
 
-mongoose
-   .connect(DB_CONN_URL, {
-      dbName: "readyornot",
-   })
-   .then(() => {
-      const PORT = process.env.PORT || 3000;
-      server = app.listen(PORT, () => {
-         console.log("Connected to DB");
-         console.log("Listening on port", PORT);
-      });
+mongoose.connect(DB_CONN_URL, { dbName: process.env.DB_NAME }).then(() => {
+   const PORT = process.env.PORT || 3000;
+   server = app.listen(PORT, () => {
+      console.log("Connected to DB");
+      console.log("Listening on port", PORT);
    });
+});
 
 // handle unhandled rejected promises(for async codes)
 process.on("unhandledRejection", (error) => {
