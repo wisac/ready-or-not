@@ -2,12 +2,19 @@ import Question from "../models/questions.js";
 import ApiFeatures from "../utils/apiFeatures.js";
 import formattedResponse from "../utils/formattedResponse.js";
 
-const getAllQuestions = (req, res, next) => {
+const getAllQuestions = async (req, res, next) => {
    console.log("IN ALL");
    try {
-      // const features = new ApiFeatures(Question.find().populate("course",))
-      const result = formattedResponse("success", [1234, 1234]);
-      res.status(200).json(result);
+      const queryString = req.query;
+      
+      const features = new ApiFeatures(
+         Question.find(),
+         queryString
+      ).limitFields();
+      const questions = await features.query;
+    
+      res.status(200).json(formattedResponse("success", questions));
+      
    } catch (error) {
       res.status(404).json(formattedResponse("fail", error.message));
    }

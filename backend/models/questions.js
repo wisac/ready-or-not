@@ -10,7 +10,8 @@ const questionSchema = new mongoose.Schema(
       question: {
          type: String,
          required: true,
-         trim: true
+         trim: true,
+         unique: true
       },
       options: {
          type: [String],
