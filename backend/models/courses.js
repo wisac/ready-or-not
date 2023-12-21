@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
-import mongoose from "mongoose";
+import mongoose, { VirtualType } from "mongoose";
 
 const courseSchema = new mongoose.Schema(
    {
@@ -23,6 +23,7 @@ const courseSchema = new mongoose.Schema(
          trim: true,
          maxLength: [100, "Course title cannot be more than 40 characters"],
       },
+      
       level: {
          type: Number,
          enum: {
@@ -30,15 +31,23 @@ const courseSchema = new mongoose.Schema(
             message: "Course can belong to level 100, 200, 300 or 400",
          },
       },
+     
    },
 
    {
-     timestamps: true
+      timestamps: true,
 
-      // toJSON: { virtuals: true },
-      // toObject: { virtuals: true },
+      toJSON: { virtuals: true },
+      toObject: { virtuals: true },
    }
 );
+
+courseSchema.virtual("numQuestions", {
+   ref: "Question",
+   localField: "_id",
+   foreignField: "course",
+   count: true
+})
 
 courseSchema.pre("find", function (next) {
    console.log("IN FIND MIDDLEWARE");

@@ -6,9 +6,9 @@ const getAllQuestions = async (req, res, next) => {
    console.log("IN ALL");
    try {
       const queryString = req.query;
-      
+
       const features = new ApiFeatures(
-         Question.find(),
+         Question.find().populate("course","courseCode title "),
          queryString
       ).limitFields();
       const questions = await features.query;
@@ -23,7 +23,8 @@ const getAllQuestions = async (req, res, next) => {
 const updateQuestion = async (req, res, next) => {
    try {
       const { questionID } = req.params;
-      const modifiedQuestion = await Question.findByIdAndUpdate(questionID);
+      const newData = req.body
+      const modifiedQuestion = await Question.findByIdAndUpdate(questionID,newData);
 
       if (!modifiedQuestion) {
          throw Error(`No question found with the ID ${questionID}`);

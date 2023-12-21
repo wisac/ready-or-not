@@ -8,7 +8,7 @@ const getAllCourses = async (req, res, next) => {
       const queryString = { ...req.query };
 
       // build query
-      const features = new ApiFeatures(Course.find(), queryString)
+      const features = new ApiFeatures(Course.find().populate("numQuestions"), queryString)
          .filter()
          .sort()
          .limitFields()
