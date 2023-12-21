@@ -1,4 +1,4 @@
-import Course from "../models/course.js";
+import Course from "../models/courses.js";
 import ApiFeatures from "../utils/apiFeatures.js";
 import formattedResponse from "../utils/formattedResponse.js";
 
@@ -7,13 +7,15 @@ const getAllCourses = async (req, res, next) => {
    try {
       const queryString = { ...req.query };
 
+      // build query
       const features = new ApiFeatures(Course.find(), queryString)
-      .filter()
-      .sort()
+         .filter()
+         .sort()
          .limitFields()
          .paginate();
+
+      // execute query
       const courses = await features.query;
-      console.log(courses)
 
       res.status(200).json(formattedResponse("success", courses));
    } catch (error) {

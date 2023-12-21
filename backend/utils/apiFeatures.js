@@ -40,7 +40,7 @@ class ApiFeatures {
    limitFields() {
       const fields = this.queryString.fields
          ? this.queryString.fields.replace(",", " ")
-         : "-__v";
+         : "-__v -updatedAt";
       this.query = this.query.select(fields);
       return this;
    }

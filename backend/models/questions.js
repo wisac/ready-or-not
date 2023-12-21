@@ -20,8 +20,12 @@ const questionSchema = new mongoose.Schema(
          require: [true, "An question must have an answer"],
          trim: true,
       },
+      year: {
+         type: Number
+      }
    },
    {
+      timestamps: true,
       toJSON: { virtuals: true },
       toObject: {
          virtuals: true,

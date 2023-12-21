@@ -35,7 +35,10 @@ const courseSchema = new mongoose.Schema(
          default: 0,
       },
    },
+
    {
+     timestamps: true
+
       // toJSON: { virtuals: true },
       // toObject: { virtuals: true },
    }

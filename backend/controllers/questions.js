@@ -3,6 +3,7 @@ import formattedResponse from "../utils/formattedResponse.js";
 const getAllQuestions = (req, res, next) => {
    console.log("IN ALL");
    try {
+      
       const result = formattedResponse("success", [1234, 1234]);
       res.status(200).json(result);
    } catch (error) {
