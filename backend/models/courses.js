@@ -21,7 +21,7 @@ const courseSchema = new mongoose.Schema(
          type: String,
          required: [true, "Course must have a title"],
          trim: true,
-         maxLength: [40, "Course title cannot be more than 40 characters"],
+         maxLength: [100, "Course title cannot be more than 40 characters"],
       },
       level: {
          type: Number,
@@ -29,10 +29,6 @@ const courseSchema = new mongoose.Schema(
             values: [100, 200, 300, 400],
             message: "Course can belong to level 100, 200, 300 or 400",
          },
-      },
-      numQuestions: {
-         type: Number,
-         default: 0,
       },
    },
 

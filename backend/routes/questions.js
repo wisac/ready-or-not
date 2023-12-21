@@ -11,7 +11,7 @@ router
 router
    .route("/:questionID")
    .get(controller.getQuestion)
-   // .patch(controller.updateQuestion)
+   .patch(controller.updateQuestion)
    // .delete(controller.deleteQuestion);
 
 

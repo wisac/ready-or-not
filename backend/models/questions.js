@@ -10,6 +10,7 @@ const questionSchema = new mongoose.Schema(
       question: {
          type: String,
          required: true,
+         trim: true
       },
       options: {
          type: [String],
@@ -20,9 +21,10 @@ const questionSchema = new mongoose.Schema(
          require: [true, "An question must have an answer"],
          trim: true,
       },
+      explanation: { type: String, trim: true },
       year: {
-         type: Number
-      }
+         type: String,
+      },
    },
    {
       timestamps: true,
