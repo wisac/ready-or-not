@@ -28,7 +28,7 @@ const getCourse = async (req, res, next) => {
    try {
       const { courseID } = req.params;
       console.log(courseID);
-      const course = await Course.findByIdAndUpdate(courseID);
+      const course = await Course.findByIdAndUpdate(courseID).populate("numQuestions");
 
       if (!course) {
          throw Error(`No course exist with the course code: ${courseID}`);

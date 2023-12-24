@@ -12,7 +12,7 @@ router
    .route("/:questionID")
    .get(controller.getQuestion)
    .patch(controller.updateQuestion)
-   // .delete(controller.deleteQuestion);
+   .delete(controller.deleteQuestion);
 
 
 export default router;

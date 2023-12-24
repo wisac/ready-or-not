@@ -8,13 +8,14 @@ const getAllQuestions = async (req, res, next) => {
       const queryString = req.query;
 
       const features = new ApiFeatures(
-         Question.find().populate("course","courseCode title "),
+         Question.find().populate("course", "courseCode title "),
          queryString
-      ).limitFields();
+      )
+         .sort()
+         .limitFields();
       const questions = await features.query;
-    
+
       res.status(200).json(formattedResponse("success", questions));
-      
    } catch (error) {
       res.status(404).json(formattedResponse("fail", error.message));
    }
@@ -23,8 +24,11 @@ const getAllQuestions = async (req, res, next) => {
 const updateQuestion = async (req, res, next) => {
    try {
       const { questionID } = req.params;
-      const newData = req.body
-      const modifiedQuestion = await Question.findByIdAndUpdate(questionID,newData);
+      const newData = req.body;
+      const modifiedQuestion = await Question.findByIdAndUpdate(
+         questionID,
+         newData
+      );
 
       if (!modifiedQuestion) {
          throw Error(`No question found with the ID ${questionID}`);
@@ -54,4 +58,24 @@ const createQuestion = async (req, res, next) => {
    }
 };
 
-export default { getAllQuestions, getQuestion, createQuestion, updateQuestion };
+const deleteQuestion = async (req, res, next) => {
+   try {
+      const { questionID } = req.params;
+      const removedQuestion = await Question.findByIdAndDelete(questionID);
+      if (!removedQuestion) {
+         throw Error(`No question found with the ID ${questionID}`);
+      }
+      res.status(204).json(formattedResponse("success", removedQuestion));
+   } catch (error) {
+      res.status(404).json(formattedResponse("fail", error.message));
+   }
+};
+
+
+export default {
+   getAllQuestions,
+   getQuestion,
+   createQuestion,
+   updateQuestion,
+   deleteQuestion,
+};

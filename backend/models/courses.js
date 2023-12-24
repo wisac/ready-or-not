@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
-import mongoose, { VirtualType } from "mongoose";
+import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema(
    {
@@ -56,8 +56,10 @@ courseSchema.pre("find", function (next) {
 
 courseSchema.pre("findOneAndUpdate", function (next) {
    console.log("||IN UPDATE MIDDLEWARE")
+   this.select("-__v")
    next()
 })
+
 
 const Course = mongoose.model("Course", courseSchema);
 
