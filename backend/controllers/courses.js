@@ -1,5 +1,6 @@
 import Course from "../models/courses.js";
 import ApiFeatures from "../utils/apiFeatures.js";
+import CustomError from "../utils/customError.js";
 import formattedResponse from "../utils/formattedResponse.js";
 
 // get all questions
@@ -8,7 +9,10 @@ const getAllCourses = async (req, res, next) => {
       const queryString = { ...req.query };
 
       // build query
-      const features = new ApiFeatures(Course.find().populate("numQuestions"), queryString)
+      const features = new ApiFeatures(
+         Course.find().populate("numQuestions"),
+         queryString
+      )
          .filter()
          .sort()
          .limitFields()
@@ -28,10 +32,14 @@ const getCourse = async (req, res, next) => {
    try {
       const { courseID } = req.params;
       console.log(courseID);
-      const course = await Course.findByIdAndUpdate(courseID).populate("numQuestions");
+      const course = await Course.findByIdAndUpdate(courseID).populate(
+         "numQuestions"
+      );
 
       if (!course) {
-         throw Error(`No course exist with the course code: ${courseID}`);
+         return next(
+            new CustomError(404, `No course exist with ID ${courseID}`)
+         );
       }
 
       res.status(200).json(formattedResponse("success", course));
@@ -57,7 +65,12 @@ const updateCourse = async (req, res, next) => {
          }
       );
       if (!modifiedCourse) {
-         throw Error(`No course exist with the course ID: ${courseID}`);
+         return next(
+            new CustomError(
+               404,
+               `No course exist with the course ID: ${courseID}`
+            )
+         );
       }
 
       res.status(200).json(formattedResponse("success", modifiedCourse));
@@ -74,7 +87,9 @@ const deleteCourse = async (req, res, next) => {
       const removedCourse = await Course.findByIdAndDelete(courseID);
 
       if (!removedCourse) {
-         throw Error(`No course exist with the course ID ${courseID}`);
+         return next(
+            CustomError(404, `No course exist with the course ID ${courseID}`)
+         );
       }
 
       res.status(204).json(formattedResponse("success", removedCourse));
