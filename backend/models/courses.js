@@ -22,8 +22,9 @@ const courseSchema = new mongoose.Schema(
          required: [true, "Course must have a title"],
          trim: true,
          maxLength: [100, "Course title cannot be more than 40 characters"],
+         unique: true,
       },
-      
+
       level: {
          type: Number,
          enum: {
@@ -31,7 +32,6 @@ const courseSchema = new mongoose.Schema(
             message: "Course can belong to level 100, 200, 300 or 400",
          },
       },
-     
    },
 
    {
@@ -46,20 +46,19 @@ courseSchema.virtual("numQuestions", {
    ref: "Question",
    localField: "_id",
    foreignField: "course",
-   count: true
-})
+   count: true,
+});
 
 courseSchema.pre("find", function (next) {
    console.log("IN FIND MIDDLEWARE");
-   next()
+   next();
 });
 
 courseSchema.pre("findOneAndUpdate", function (next) {
-   console.log("||IN UPDATE MIDDLEWARE")
-   this.select("-__v")
-   next()
-})
-
+   console.log("||IN UPDATE MIDDLEWARE");
+   this.select("-__v");
+   next();
+});
 
 const Course = mongoose.model("Course", courseSchema);
 
