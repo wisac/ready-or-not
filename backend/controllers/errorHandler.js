@@ -4,19 +4,23 @@ import formattedResponse from "../utils/formattedResponse.js";
 const errorInDev = (error) => {
    console.error(error);
    return {
-      status: error.status,
-      message: error.message,
-      stack: error.stack,
       statusCode: error.statusCode,
+      errors: {
+         status: error.status,
+         message: error.message,
+         stack: error.stack,
+      },
    };
 };
 
 const errorInProd = (error) => {
-   // console.log(error)
+   console.log(error)
    return {
-      status: error.status,
-      message: error.message,
       statusCode: error.statusCode,
+      errors: {
+         status: error.status,
+         message: error.message,
+      },
    };
 };
 
@@ -31,20 +35,19 @@ const dupMessage = (err) => {
 };
 
 const errorHandler = (err, req, res, next) => {
-   const error = structuredClone(err);
-   error.status || "error";
-   error.message || "Something went wrong";
-   error.statusCode || 500;
+   err.status ||= "error";
+   err.message ||= "Something went wrong";
+   err.statusCode ||= 500;
 
    let errorResponse = err;
-   // console.error(err)
 
    // send error during development
    if (process.env.NODE_ENV === "development") {
-      errorResponse = errorInDev(error);
+      errorResponse = errorInDev(err);
    }
    // handle mongodb errors
    else {
+      // invalid id errors
       if (err.name === "CastError") {
          errorResponse = errorInProd(
             new CustomError(400, `Invalid ${err.path}: ${err.value}`)
@@ -61,12 +64,13 @@ const errorHandler = (err, req, res, next) => {
          const message = dupMessage(err);
 
          errorResponse = errorInProd(new CustomError(400, message));
+      } else {
+         errorResponse = errorInProd(err);
       }
    }
 
-   // send error during production
-
-   res.status(errorResponse.statusCode || 501).json(errorResponse);
+   // send error
+   res.status(errorResponse.statusCode).json(errorResponse.errors);
 };
 
 export default errorHandler;
