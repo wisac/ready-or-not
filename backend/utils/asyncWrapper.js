@@ -1,8 +1,6 @@
-const asyncWrapper = (controllerFn) => {
-   return async (req, res, next) => {
+const asyncWrapper = (controllerFn) => async (req, res, next) => {
       await controllerFn(req, res, next).catch(next);
    };
-};
 
 export default asyncWrapper;
 

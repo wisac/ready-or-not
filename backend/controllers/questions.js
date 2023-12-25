@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import Question from "../models/questions.js";
 import ApiFeatures from "../utils/apiFeatures.js";
 import asyncWrapper from "../utils/asyncWrapper.js";

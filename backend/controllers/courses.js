@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import Course from "../models/courses.js";
 import ApiFeatures from "../utils/apiFeatures.js";
 import asyncWrapper from "../utils/asyncWrapper.js";
@@ -26,7 +27,7 @@ const getAllCourses = asyncWrapper(async (req, res, next) => {
 });
 
 // get one course
-const getCourses = async (req, res, next) => {
+const getCourses = asyncWrapper(async (req, res, next) => {
    const { courseID } = req.params;
    console.log(courseID);
    const course = await Course.findByIdAndUpdate(courseID).populate(
@@ -37,7 +38,7 @@ const getCourses = async (req, res, next) => {
       return next(new CustomError(404, `No course exist with ID ${courseID}`));
    }
    res.status(200).json(formattedResponse("success", course));
-};
+})
 
 const getCourse = asyncWrapper(getCourses);
 
