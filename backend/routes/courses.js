@@ -1,5 +1,6 @@
 import { Router } from "express";
 import controller from "../controllers/courses.js";
+import auth from "../controllers/auth.js";
 
 const router = Router();
 
@@ -11,9 +12,9 @@ router
 
 router
    .route("/")
-   .get(controller.getAllCourses)
+   .get(auth.protect,controller.getAllCourses)
    .post(controller.createCourse);
-   
+  
 
 
 export default router;
