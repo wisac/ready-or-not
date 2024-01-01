@@ -8,13 +8,19 @@ router
    .route("/:courseID")
    .get(controller.getCourse)
    .patch(controller.updateCourse)
-   .delete(controller.deleteCourse);
+   .delete(
+      auth.protect,
+      auth.restrictedTo.bind(["admin"]),
+      controller.deleteCourse
+   );
 
 router
    .route("/")
-   .get(auth.protect,controller.getAllCourses)
-   .post(controller.createCourse);
-  
-
+   .get(auth.protect, controller.getAllCourses)
+   .post(
+      auth.protect,
+      auth.restrictedTo.bind(["admin"]),
+      controller.createCourse
+   );
 
 export default router;

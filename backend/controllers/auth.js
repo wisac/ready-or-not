@@ -74,8 +74,8 @@ const login = asyncWrapper(async (req, res, next) => {
 const protect = asyncWrapper(async (req, res, next) => {
    // 1. check if token is available
    if (
-      !req.headers.authorization
-      || !req.headers.authorization.startsWith("Bearer")
+      !req.headers.authorization ||
+      !req.headers.authorization.startsWith("Bearer")
    ) {
       return next(
          new CustomError(401, "You are not signed in. Please sign in")
@@ -104,7 +104,10 @@ const protect = asyncWrapper(async (req, res, next) => {
    // 4. check if user has changed password after token signing
    if (user.changedPasswordAfterTokenIssued(decoded.iat)) {
       return next(
-         new CustomError(401, "You were automatically signed out. Please sign in again.")
+         new CustomError(
+            401,
+            "You were automatically signed out. Please sign in again."
+         )
       );
    }
 
@@ -113,8 +116,21 @@ const protect = asyncWrapper(async (req, res, next) => {
    next();
 });
 
-const restrictedTo = (req, res, next) => {
-   
-}
+const restrictedTo = asyncWrapper(async (req, res, next) => {
+   if (!this.includes(req.user.role)) {
+      return next(
+         new CustomError(
+            401,
+            "You do not have permission to perform this action"
+         )
+      );
+   }
+   next();
+});
 
-export default { signup, login, protect };
+export default {
+   signup,
+   login,
+   protect,
+   restrictedTo,
+};
