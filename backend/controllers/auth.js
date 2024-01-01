@@ -62,7 +62,7 @@ const login = asyncWrapper(async (req, res, next) => {
    }
 
    // 2. sign token
-   const token = JWTGenerator({ id: user._id });
+   const token = JWTGenerator(user._id);
 
    // 3. send token
    res.status(200).json({
@@ -71,24 +71,50 @@ const login = asyncWrapper(async (req, res, next) => {
    });
 });
 
-
 const protect = asyncWrapper(async (req, res, next) => {
    // 1. check if token is available
-   const token = req.headers.authorization.split(" ")[1];
-   console.log(token)
-   if (!token) {
-      return next(new CustomError(401, "You are not signed in. Please sign in"));
+   if (
+      !req.headers.authorization
+      || !req.headers.authorization.startsWith("Bearer")
+   ) {
+      return next(
+         new CustomError(401, "You are not signed in. Please sign in")
+      );
    }
+   const token = req.headers.authorization.split(" ")[1];
+   console.log(token);
 
    // 2. check if token is valid
    const decoded = JWTVerifier(token);
 
-   console.log(Date(decoded.exp))
+   console.log(decoded);
 
-})
+   // 3. find user with decoded id
+   const user = await User.findById(decoded.id);
+   console.log(user);
+   if (!user) {
+      return next(
+         new CustomError(
+            401,
+            "Token is invalid or has expired. Please sign in again"
+         )
+      );
+   }
 
-export default {
-   signup,
-   login,
-   protect
-};
+   // 4. check if user has changed password after token signing
+   if (user.changedPasswordAfterTokenIssued(decoded.iat)) {
+      return next(
+         new CustomError(401, "You were automatically signed out. Please sign in again.")
+      );
+   }
+
+   // 5.
+   req.user = user;
+   next();
+});
+
+const restrictedTo = (req, res, next) => {
+   
+}
+
+export default { signup, login, protect };

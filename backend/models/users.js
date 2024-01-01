@@ -54,9 +54,20 @@ userSchema.pre("save", async function (next) {
    if (this.isModified("password")) {
       const hashedPassword = await bcrypt.hash(this.password, 12);
       this.password = hashedPassword;
+      // this.passwordChangedAt = Date.now();
    }
    next();
 });
+
+userSchema.methods.changedPasswordAfterTokenIssued = function (tokenIssueTimestamp) {
+   if (this.passwordChangedAt) {
+      const passwordChangedTimeStamp = this.passwordChangedAt / 1000;
+      // console.log(tokenIssueTimestamp,passwordChangedTimeStamp)
+      return passwordChangedTimeStamp > tokenIssueTimestamp
+   }
+   return false
+
+}
 
 const User = mongoose.model("User", userSchema);
 
