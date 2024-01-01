@@ -116,7 +116,7 @@ const protect = asyncWrapper(async (req, res, next) => {
    next();
 });
 
-const restrictedTo = asyncWrapper(async (req, res, next) => {
+function restrictedTo(req, res, next) {
    if (!this.includes(req.user.role)) {
       return next(
          new CustomError(
@@ -126,7 +126,7 @@ const restrictedTo = asyncWrapper(async (req, res, next) => {
       );
    }
    next();
-});
+}
 
 export default {
    signup,
