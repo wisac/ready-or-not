@@ -69,6 +69,8 @@ userSchema.methods.changedPasswordAfterTokenIssued = function (tokenIssueTimesta
 
 }
 
+
+
 const User = mongoose.model("User", userSchema);
 
 export default User;
