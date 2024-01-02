@@ -4,11 +4,13 @@ import signup from "./auth/signup.js";
 import protect from "./auth/protect.js";
 import permitOnly from "./auth/permitOnly.js";
 import forgotPassword from "./auth/forgotPassword.js";
+import resetPassword from "./auth/resetPassword.js";
 
 export default {
    signup: asyncWrapper(signup),
    login: asyncWrapper(login),
    protect: asyncWrapper(protect),
    permitOnly,
-   forgotPassword: asyncWrapper(forgotPassword)
+   forgotPassword: asyncWrapper(forgotPassword),
+   resetPassword: asyncWrapper(resetPassword)
 };
