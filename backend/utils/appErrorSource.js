@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import CustomError from "./customError.js";
 
 const dbDuplicateError = (err) => {
@@ -21,7 +22,19 @@ const dbValidationError = (err) => {
    return new CustomError(400, `${errorMessages}`);
 };
 
-const dbErrorHandler = (err) => {
+// jwt errors
+const JsonWebTokenError = () => {
+   return new CustomError(
+      400,
+      "Token is invalid or has expired. Please login again"
+   );
+};
+
+const tokenExpiredError = () => {
+   return new CustomError(400, "Token has expired. Please login again.");
+};
+
+const appErrorSource = (err) => {
    let error = err;
    if (err.name === "CastError") {
       error = dbCastError(err);
@@ -29,8 +42,12 @@ const dbErrorHandler = (err) => {
       error = dbValidationError(err);
    } else if (err.code === 11000) {
       error = dbDuplicateError(err);
+   } else if (error.name === "JsonWebTokenError") {
+      error = JsonWebTokenError();
+   } else if (err.name === "TokenExpiredError") {
+      error = tokenExpiredError();
    }
    return error;
 };
 
-export default dbErrorHandler
+export default appErrorSource;

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import dbErrorHandler from "../utils/dbErrors.js";
+import findErrorSource from "../utils/appErrorSource.js";
 
-const developmentError = (error) => {
+const developmentErrorFormatter = (error) => {
    console.error(error);
    return {
       statusCode: error.statusCode,
@@ -13,7 +13,7 @@ const developmentError = (error) => {
    };
 };
 
-const productionError = (error) => {
+const productionErrorFormatter = (error) => {
    console.log(error);
    return {
       statusCode: error.statusCode,
@@ -33,10 +33,10 @@ const globalErrorHandler = (err, req, res, next) => {
 
    // send error during development
    if (process.env.NODE_ENV === "development") {
-      errorResponse = developmentError(err);
+      errorResponse = developmentErrorFormatter(err);
    } else {
-      const error = dbErrorHandler(err);
-      errorResponse = productionError(error);
+      const error = findErrorSource(err);
+      errorResponse = productionErrorFormatter(error);
    }
 
    // send error
