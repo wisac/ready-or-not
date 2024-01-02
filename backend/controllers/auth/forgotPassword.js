@@ -3,6 +3,7 @@ import crypto from "crypto";
 import CustomError from "../../utils/customError.js";
 import User from "../../models/users.js";
 import Token from "../../models/tokens.js";
+import sendEmail from "../../utils/sendEmail.js";
 
 export default async (req, res, next) => {
    // 1. check if email is available.
@@ -24,7 +25,7 @@ export default async (req, res, next) => {
    // 3. generate token using crypto
    const token = crypto.randomBytes(32).toString("hex");
 
-   console.log(user)
+   console.log(user);
    // 4. store token hash in db and with expiry time
    const newToken = await Token.create({
       name: "password reset token",
@@ -32,8 +33,35 @@ export default async (req, res, next) => {
       value: token,
       expiresAt: Date.now() + 5 * 60_000,
    });
-   console.log(token)
+   console.log(token);
    console.log(newToken);
+
    // 5. send token to email
+   const resetPasswordUrl = `${req.protocol}://${req.get(
+      "host"
+   )}/api/v1/users/0/reset-password/${token}`;
+
+   const emailDetails = {
+      from: "isaac@readyornot.com",
+      to: user.email,
+      subject: "Password reset token (Valid for 5 minutes)",
+      text: `You can reset your password by visiting this url.\n${resetPasswordUrl}\nIf you did not initiate this process, please ignore this message.`,
+   };
+
+   try {
+      sendEmail(emailDetails);
+   } catch (error) {
+      await user.remove();
+      return next(
+         new CustomError(
+            500,
+            "There was an error sending the email. Try again later."
+         )
+      );
+   }
    // 6. send response
+   res.status(200).json({
+      status: "success",
+      message: `A password reset link has been sent to ${user.email}`,
+   });
 };
