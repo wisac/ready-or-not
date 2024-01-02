@@ -23,23 +23,23 @@ export default async (req, res, next) => {
    }
 
    // 3. generate token using crypto
-   const token = crypto.randomBytes(32).toString("hex");
+   const tokenHex = crypto.randomBytes(32).toString("hex");
 
    console.log(user);
    // 4. store token hash in db and with expiry time
    const newToken = await Token.create({
       name: "password reset token",
       userID: user._id,
-      value: token,
+      value: tokenHex,
       expiresAt: Date.now() + 5 * 60_000,
    });
-   console.log(token);
+   console.log(tokenHex);
    console.log(newToken);
 
    // 5. send token to email
    const resetPasswordUrl = `${req.protocol}://${req.get(
       "host"
-   )}/api/v1/users/0/reset-password/${token}`;
+   )}/api/v1/users/0/reset-password/${tokenHex}`;
 
    const emailDetails = {
       from: "isaac@readyornot.com",
@@ -49,9 +49,9 @@ export default async (req, res, next) => {
    };
 
    try {
-      sendEmail(emailDetails);
+      await sendEmail(emailDetails);
    } catch (error) {
-      await user.remove();
+      await newToken.deleteOne();
       return next(
          new CustomError(
             500,

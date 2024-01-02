@@ -18,7 +18,7 @@ router
    .route("/")
    .get(
       authenticator.protect,
-      authenticator.permitOnly.bind("admin"),
+      authenticator.permitOnly.bind(["admin"]),
       controller.getAllCourses
    )
    .post(

@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export default (emailOptions) => {
+export default async (emailOptions) => {
    const transport = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
@@ -9,6 +9,7 @@ export default (emailOptions) => {
          pass: process.env.EMAIL_PASSWORD,
       },
    });
-
-   transport.sendMail(emailOptions);
+   
+    await transport.sendMail(emailOptions);
+  
 };

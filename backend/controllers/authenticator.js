@@ -9,6 +9,6 @@ export default {
    signup: asyncWrapper(signup),
    login: asyncWrapper(login),
    protect: asyncWrapper(protect),
-   permitOnly: asyncWrapper(permitOnly),
+   permitOnly,
    forgotPassword: asyncWrapper(forgotPassword)
 };
