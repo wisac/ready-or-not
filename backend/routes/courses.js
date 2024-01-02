@@ -1,6 +1,6 @@
 import { Router } from "express";
 import controller from "../controllers/courses.js";
-import auth from "../controllers/auth.js";
+import authenticator from "../controllers/authenticator.js";
 
 const router = Router();
 
@@ -9,17 +9,21 @@ router
    .get(controller.getCourse)
    .patch(controller.updateCourse)
    .delete(
-      auth.protect,
-      auth.restrictedTo.bind(["admin"]),
+      authenticator.protect,
+      authenticator.permitOnly.bind(["admin"]),
       controller.deleteCourse
    );
 
 router
    .route("/")
-   .get(auth.protect, controller.getAllCourses)
+   .get(
+      authenticator.protect,
+      authenticator.permitOnly.bind("admin"),
+      controller.getAllCourses
+   )
    .post(
-      auth.protect,
-      auth.restrictedTo.bind(["admin"]),
+      authenticator.protect,
+      authenticator.permitOnly.bind(["admin"]),
       controller.createCourse
    );
 
