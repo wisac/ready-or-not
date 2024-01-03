@@ -56,8 +56,13 @@ userSchema.pre("save", async function (next) {
       this.password = hashedPassword;
       // this.passwordChangedAt = Date.now();
    }
+   if (this.isModified("password") && !this.isNew) {
+      this.passwordChangedAt = Date.now();
+   }
    next();
 });
+
+
 
 userSchema.methods.changedPasswordAfterTokenIssued = function (tokenIssueTimestamp) {
    if (this.passwordChangedAt) {
