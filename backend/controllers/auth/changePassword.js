@@ -1,22 +1,9 @@
-import User from "../../models/users.js";
+/* eslint-disable consistent-return */
 import CustomError from "../../utils/customError.js";
-import { JWTVerifier } from "../../utils/JWTService.js";
+import { JWTGenerator } from "../../utils/JWTService.js";
 
 export default async (req, res, next) => {
-   // 1. check if user is logged in
-   // if (
-   //    // eslint-disable-next-line operator-linebreak
-   //    !req.headers.authorization ||
-   //    !req.headers.authorization.startsWith("Bearer")
-   // ) {
-   //    return next(new CustomError("You are not logged in. Please login"));
-   // }
-
-   // // 1.b check if token is valid
-   // const token = req.headers.authorization.split(" ")[1];
-   // const decoded = JWTVerifier(token);
-
-   // 2. check if old password is valid
+   // 1. check if required data is given
    const { oldPassword, newPassword, confirmNewPassword } = req.body;
    if (!oldPassword || !newPassword || !confirmNewPassword) {
       return next(
@@ -31,6 +18,12 @@ export default async (req, res, next) => {
    if (newPassword !== confirmNewPassword) {
       return next(new CustomError(400, "Passwords do not match"));
    }
+
+   // 2. check if old password is correct
+   if (!(await req.user.correctPassword(oldPassword))) {
+      return next(new CustomError(401, "Your current password is wrong."));
+   }
+
    // 4. check if old password is not equal new password
    if (await req.user.isOldPasswordSameAsNew(newPassword)) {
       return next(
@@ -40,12 +33,16 @@ export default async (req, res, next) => {
          )
       );
    }
-   console.log("OLD PASS:",req.user.password)
-   // 5. update password
+
+   // 5. update password and passwordChangedAt
    req.user.password = newPassword;
    await req.user.save();
-   // 6. update passwordChangedAt
-   console.log("UPDATED PASSWORD:", req.user.password)
-   console.log(req.user)
+
+   // 6. keep user signed in: MAY REMOVE IT LATER FOR SECURITY REASONS
+   const token = JWTGenerator(req.user._id);
    // 7. send response with token
+   res.status(200).json({
+      status: "success",
+      token,
+   });
 };

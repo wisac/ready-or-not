@@ -66,12 +66,16 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.changedPasswordAfterTokenIssued = function (tokenIssueTimestamp) {
    if (this.passwordChangedAt) {
+      // convert to seconds to match token timestamp
       const passwordChangedTimeStamp = this.passwordChangedAt / 1000;
-      // console.log(tokenIssueTimestamp,passwordChangedTimeStamp)
       return passwordChangedTimeStamp > tokenIssueTimestamp
    }
    return false
 
+}
+
+userSchema.methods.correctPassword = async function (givenPassword) {
+   return bcrypt.compare(givenPassword, this.password);
 }
 
 userSchema.methods.isOldPasswordSameAsNew = async function (newPassword) {
