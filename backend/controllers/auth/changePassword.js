@@ -40,8 +40,12 @@ export default async (req, res, next) => {
          )
       );
    }
-   console.log("PASSED")
+   console.log("OLD PASS:",req.user.password)
    // 5. update password
+   req.user.password = newPassword;
+   await req.user.save();
    // 6. update passwordChangedAt
+   console.log("UPDATED PASSWORD:", req.user.password)
+   console.log(req.user)
    // 7. send response with token
 };
