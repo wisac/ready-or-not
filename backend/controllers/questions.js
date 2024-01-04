@@ -76,8 +76,18 @@ const getQuestion = asyncWrapper(async (req, res, next) => {
 
 // create new question
 const createQuestion = asyncWrapper(async (req, res, next) => {
-   const newQuestion = await Question.create(req.body);
-  
+   const questionData = req.body
+   const courseID = questionData.course
+   
+   if (courseID) {
+      const course = await courseExist(courseID);
+      if (!course) {
+         return next(
+            new CustomError(400, `No course exist with the ID :${courseID}`)
+            );
+         }
+      }
+      const newQuestion = await Question.create(questionData);
 
    res.status(201).json(formattedResponse("success", newQuestion));
 });
