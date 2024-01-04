@@ -6,7 +6,9 @@
    "scripts": {
       "start": "nodemon server.js",
       "start:prod": "NODE_ENV=production nodemon  server.js",
-      "lint": "eslint . --fix"
+      "lint": "eslint . --fix",
+      "mongod:start": "mongod --fork --logpath ~/.log/mongodb/mongod.log",
+      "mongod:shutdown": "mongod --shutdown"
    },
    "dependencies": {
       "bcrypt": "^5.1.1",

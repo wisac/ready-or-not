@@ -74,6 +74,10 @@ userSchema.methods.changedPasswordAfterTokenIssued = function (tokenIssueTimesta
 
 }
 
+userSchema.methods.isOldPasswordSameAsNew = async function (newPassword) {
+   return bcrypt.compare(newPassword,this.password)
+}
+
 
 
 const User = mongoose.model("User", userSchema);

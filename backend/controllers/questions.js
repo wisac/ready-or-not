@@ -4,7 +4,6 @@ import ApiFeatures from "../utils/apiFeatures.js";
 import asyncWrapper from "../utils/asyncWrapper.js";
 import CustomError from "../utils/customError.js";
 import formattedResponse from "../utils/formattedResponse.js";
-
 import { courseExist } from "./courses.js";
 
 // get all questions
@@ -76,18 +75,18 @@ const getQuestion = asyncWrapper(async (req, res, next) => {
 
 // create new question
 const createQuestion = asyncWrapper(async (req, res, next) => {
-   const questionData = req.body
-   const courseID = questionData.course
-   
+   const questionData = req.body;
+   const courseID = questionData.course;
+
    if (courseID) {
       const course = await courseExist(courseID);
       if (!course) {
          return next(
             new CustomError(400, `No course exist with the ID :${courseID}`)
-            );
-         }
+         );
       }
-      const newQuestion = await Question.create(questionData);
+   }
+   const newQuestion = await Question.create(questionData);
 
    res.status(201).json(formattedResponse("success", newQuestion));
 });

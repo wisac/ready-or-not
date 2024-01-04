@@ -10,6 +10,7 @@ router.patch("/:id", controller.updateUser);
 router.post("/signup", authenticator.signup);
 router.post("/login", authenticator.login);
 router.post("/0/forgot-password", authenticator.forgotPassword);
-router.patch("/0/reset-password/:token",authenticator.resetPassword)
+router.patch("/0/reset-password/:token", authenticator.resetPassword);
+router.patch("/0/change-Password",authenticator.protect,authenticator.changePassword)
 
 export default router;
