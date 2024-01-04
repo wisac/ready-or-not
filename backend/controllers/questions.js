@@ -5,6 +5,8 @@ import asyncWrapper from "../utils/asyncWrapper.js";
 import CustomError from "../utils/customError.js";
 import formattedResponse from "../utils/formattedResponse.js";
 
+import { courseExist } from "./courses.js";
+
 // get all questions
 const getAllQuestions = asyncWrapper(async (req, res, next) => {
    console.log("IN ALL");
@@ -25,12 +27,28 @@ const getAllQuestions = asyncWrapper(async (req, res, next) => {
 });
 
 // update existing question
+
 const updateQuestion = asyncWrapper(async (req, res, next) => {
    const { questionID } = req.params;
    const newData = req.body;
+   const courseID = newData.course;
+
+   // only accept question which has existing course
+   if (courseID) {
+      const course = await courseExist(courseID);
+      if (!course) {
+         return next(
+            new CustomError(400, `No course exist with the ID :${courseID}`)
+         );
+      }
+   }
+
    const modifiedQuestion = await Question.findByIdAndUpdate(
       questionID,
-      newData
+      newData,
+      {
+         runValidators: true,
+      }
    );
 
    if (!modifiedQuestion) {
@@ -59,6 +77,7 @@ const getQuestion = asyncWrapper(async (req, res, next) => {
 // create new question
 const createQuestion = asyncWrapper(async (req, res, next) => {
    const newQuestion = await Question.create(req.body);
+  
 
    res.status(201).json(formattedResponse("success", newQuestion));
 });
@@ -75,10 +94,23 @@ const deleteQuestion = asyncWrapper(async (req, res, next) => {
    res.status(204).json(formattedResponse("success", removedQuestion));
 });
 
+// suggest correction
+const suggestCorrection = asyncWrapper(async (req, res, next) => {
+   const { questionID } = req.params;
+   const newSuggestion = req.body;
+
+   const question = await Question.findById(questionID);
+   question.suggestedCorrections.push(newSuggestion);
+   const modifiedQuestion = await question.save();
+
+   res.status(200).json(formattedResponse("success", modifiedQuestion));
+});
+
 export default {
    getAllQuestions,
    getQuestion,
    createQuestion,
    updateQuestion,
    deleteQuestion,
+   suggestCorrection,
 };

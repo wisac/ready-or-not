@@ -38,7 +38,7 @@ const getCourses = asyncWrapper(async (req, res, next) => {
       return next(new CustomError(404, `No course exist with ID ${courseID}`));
    }
    res.status(200).json(formattedResponse("success", course));
-})
+});
 
 const getCourse = asyncWrapper(getCourses);
 
@@ -47,8 +47,6 @@ const updateCourse = asyncWrapper(async (req, res, next) => {
    const { courseID } = req.params;
    const courseUpdates = req.body;
 
-   console.log(req.params);
-   console.log(courseID, courseUpdates);
    const modifiedCourse = await Course.findByIdAndUpdate(
       courseID,
       courseUpdates,
@@ -87,10 +85,15 @@ const createCourse = asyncWrapper(async (req, res, next) => {
    res.status(201).json(formattedResponse("success", newCourse));
 });
 
+export const courseExist = async (courseID) => {
+   const course = await Course.findById(courseID);
+   return course !== null
+}
+
 export default {
    getAllCourses,
    getCourse,
    updateCourse,
    deleteCourse,
    createCourse,
-};
+   };

@@ -3,22 +3,27 @@
 import mongoose, { Schema } from "mongoose";
 import crypto from "crypto";
 
-const tokenSchema = mongoose.Schema({
-   name: { type: String, default: "password reset token" },
-   userID: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+const tokenSchema = mongoose.Schema(
+   {
+      name: { type: String, default: "password reset token" },
+      userID: {
+         type: Schema.Types.ObjectId,
+         ref: "User",
+         required: true,
+      },
+      value: {
+         type: String,
+         required: true,
+      },
+      expiresAt: {
+         type: Date,
+         required: true,
+      },
    },
-   value: {
-      type: String,
-      required: true,
-   },
-   expiresAt: {
-      type: Date,
-      required: true,
-   },
-});
+   {
+      timestamps: true,
+   }
+);
 
 tokenSchema.pre("save", function (next) {
    this.value = crypto.createHash("sha256").update(this.value).digest("hex");

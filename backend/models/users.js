@@ -42,10 +42,10 @@ const userSchema = mongoose.Schema(
          type: [Schema.Types.ObjectId],
          ref: "Course",
       },
-      passwordChangedAt: Date,
+      passwordChangedAt: Date,  
    },
    {
-      timeStamps: true,
+      timestamps: true
    }
 );
 

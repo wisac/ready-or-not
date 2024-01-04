@@ -14,4 +14,6 @@ router
    .patch(controller.updateQuestion)
    .delete(controller.deleteQuestion);
 
+   router.patch("/corrections/:questionID",controller.suggestCorrection)
+
 export default router;
