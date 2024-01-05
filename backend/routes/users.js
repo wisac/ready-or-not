@@ -16,5 +16,6 @@ router.patch(
    authenticator.protect,
    authenticator.changePassword
 );
+router.patch("/0/update-me",authenticator.protect,authenticator.updateMe)
 
 export default router;

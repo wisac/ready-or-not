@@ -6,6 +6,7 @@ import permitOnly from "./auth/permitOnly.js";
 import forgotPassword from "./auth/forgotPassword.js";
 import resetPassword from "./auth/resetPassword.js";
 import changePassword from "./auth/changePassword.js";
+import updateMe from "./auth/updateMe.js";
 
 export default {
    signup: asyncWrapper(signup),
@@ -14,5 +15,6 @@ export default {
    permitOnly,
    forgotPassword: asyncWrapper(forgotPassword),
    resetPassword: asyncWrapper(resetPassword),
-   changePassword: asyncWrapper(changePassword)
+   changePassword: asyncWrapper(changePassword),
+   updateMe: asyncWrapper(updateMe)
 };
